@@ -9,6 +9,7 @@ namespace SuperShop.Data.Entities
     {
         int Id { get; set; }
 
+        //string Name { get; set; }
         //bool WasDeleted { get; set; }
     }
 }
