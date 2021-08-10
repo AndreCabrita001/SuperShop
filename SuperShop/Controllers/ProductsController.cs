@@ -52,8 +52,9 @@ namespace SuperShop.Controllers
             return View(product);
         }
 
-        [Authorize]
+
         // GET: Products/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -78,15 +79,16 @@ namespace SuperShop.Controllers
                 }
                 var product = _converterHelper.ToProduct(model, imageId, true);
                 //TODO CHANGE TO LOGGED USER 
-                product.User = await _userHelper.GetUserByEmailAsync("aandrecaldeira15@gmail.com");
+                product.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await _productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        [Authorize]
+
         // GET: Products/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -131,7 +133,7 @@ namespace SuperShop.Controllers
                     var product = _converterHelper.ToProduct(model, imageId, false);
 
                     //TODO CHANGE TO LOGGED USER 
-                    product.User = await _userHelper.GetUserByEmailAsync("aandrecaldeira15@gmail.com");
+                    product.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                     await _productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -151,6 +153,7 @@ namespace SuperShop.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
